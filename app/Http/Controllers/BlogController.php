@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class BlogController extends Controller
 {
     public function create(){
-        return view('posts.create');
+        $categories = Category::all();
+
+        return view('posts.create', ['categories' => $categories]);
     }
 
     public function store(Request $request){
@@ -19,6 +22,7 @@ class BlogController extends Controller
         $valid = $request->validate([
             'title' => 'required|unique:blogs|max:255|min:5',
             'slug' => 'required|unique:blogs',
+            'category_id' => 'required|exists:categories, id',
             'details' => 'required|min:10'
         ]);
 
@@ -31,8 +35,10 @@ class BlogController extends Controller
 
     public function edit($id){
         $blog = Blog::findOrFail($id);
+        $categories = Category::all();
         // dd($blog);
-        return view('posts.edit', ['blog'=>$blog]);
+        return view('posts.edit', ['blog'=>$blog,
+                                                        'categories'=>$categories]);
     }
 
     public function update(Request $request, $id){
@@ -43,6 +49,7 @@ class BlogController extends Controller
         $valid = $request->validate([
             'title' => ['required', 'max:255', 'min:5'],
             'slug' => ['required', Rule::unique('blogs')->ignore($blog)],
+            'category_id' => 'required|exists:categories, id',
             'details' => ['required', 'min:10']
         ]);
 

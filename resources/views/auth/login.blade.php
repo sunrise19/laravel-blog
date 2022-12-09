@@ -29,7 +29,7 @@
                 <form action="{{ route('login') }}" class="form-control" method="post">
                     @csrf
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Title" @error('name') is-invalid @enderror value="{{ old('name')}}">
 
@@ -37,7 +37,7 @@
                         <small class="text-danger">{{ $message}}</small>
                         @enderror
 
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -54,16 +54,6 @@
                         <input type="password" class="form-control" id="password" name="password" @error('password') is-invalid @enderror value="{{ old('password')}}">
 
                         @error('password')
-                        <small class="text-danger">{{ $message}}</small>
-                        @enderror
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" @error('"password_confirmation"') is-invalid @enderror value="{{ old('"password_confirmation"')}}">
-
-                        @error('"password_confirmation"')
                         <small class="text-danger">{{ $message}}</small>
                         @enderror
 

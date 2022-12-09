@@ -24,7 +24,7 @@
         @endif --}}
 
         <div class="col-md-6 offset-md-3">
-            <h1 class="text-center">BLOG FORM</h1>
+            <h1 class="text-center">EDIT BLOG</h1>
             <div class="sm-shadow card p-5 m-3">
                 <form action="{{ route('blog.update', $blog->id)}}" class="form-control" method="post">
                     @csrf
@@ -38,6 +38,20 @@
                         @enderror
 
                     </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category_id" id="category" class="form-select">
+                            <option >Select Category</option>
+                            @foreach ($categories as $category)
+                                @if ($blog->category_id == $category->id)
+                                selected
+                                @endif
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="slug" class="form-label">Slug</label>
                         <input type="text" class="form-control" name="slug" id="slug" placeholder="" @error('slug') is-invalid @enderror value="{{$blog->slug}}">

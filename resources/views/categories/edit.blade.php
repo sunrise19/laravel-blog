@@ -26,12 +26,13 @@
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center">EDIT CATEGORY</h1>
             <div class="sm-shadow card p-5 m-3">
-                <form action="{{ route('categories.update', $blog->id)}}" class="form-control" method="post">
+                <form action="{{ route('categories.update', $category->id)}}" class="form-control" method="post">
                     @csrf
+                    {{method_field('PATCH')}}
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="name" @error('name') is-invalid @enderror value="{{$blog->name}}">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="name" @error('name') is-invalid @enderror value="{{$category->name}}">
 
                         @error('name')
                         <small class="text-danger">{{ $message}}</small>
@@ -40,7 +41,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control" name="slug" id="slug" placeholder="" @error('slug') is-invalid @enderror value="{{$blog->slug}}">
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="" @error('slug') is-invalid @enderror value="{{$category->slug}}">
 
                         @error('slug')
                         <small class="text-danger">{{ $message}}</small>

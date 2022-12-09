@@ -40,6 +40,16 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category_id" id="category" class="form-select">
+                            <option >Select Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="slug" class="form-label">Slug</label>
                         <input type="text" class="form-control" name="slug" id="slug" placeholder="" @error('slug') is-invalid @enderror value="{{ old('slug')}}">
 
