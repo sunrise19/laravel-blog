@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('edit/{id}', [BlogController::class, 'edit']) ->name('blog.edit');
     Route::post('/edit/{id}', [BlogController::class, 'update']) ->name('blog.update');
     Route::get('/delete/{id}', [BlogController::class, 'destroy']) ->name('blog.destroy');
+    Route::resource('/categories', CategoryController::class);
 });
 
 Route::get('/blog/{slug}', [App\Http\Controllers\FrontController::class, 'show']) ->name('blog.show');

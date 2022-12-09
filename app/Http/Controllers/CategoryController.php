@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -25,6 +27,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('categories.create');
     }
 
     /**
@@ -36,6 +39,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+            // dd($request->input('title'), $request->fullUrl());
+            // dd($request->input('title'), $request->ip());
+            $valid = $request->validate([
+                'name' => 'required|unique:categories|max:255|min:5',
+                'slug' => 'required|unique:categories',
+                // 'details' => 'required|min:10'
+            ]);
+
+            // dd($valid['slug']);
+            $slug = Str::slug($valid['slug'], '-');
+            Category::create(array_merge($valid, ['slug'=> $slug]));
+            // return redirect()->back()->with('message', 'Category Created');
+            return redirect()->back()->withInput($request->input())->with('message', 'Category Created'); //leaves the information on the field if an error is thrown
     }
 
     /**
@@ -57,7 +73,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        // dd($blog);
+        return view('categories.edit', ['category'=>$category]);
     }
 
     /**
@@ -70,6 +87,18 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+         // dd($blog);
+        // dd($slug);
+
+        $valid = $request->validate([
+            'name' => ['required', 'max:255', 'min:5'],
+            'slug' => ['required', Rule::unique('categories')->ignore($category)]
+        ]);
+
+        // dd($valid['slug']);
+        $slug = Str::slug($valid['slug'], '-');
+        $category->update(array_merge($valid, ['slug'=> $slug]));
+        return redirect()->back()->with('message', 'Category Updated');
     }
 
     /**
