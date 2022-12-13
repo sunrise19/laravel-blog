@@ -22,7 +22,7 @@ class BlogController extends Controller
         $valid = $request->validate([
             'title' => 'required|unique:blogs|max:255|min:5',
             'slug' => 'required|unique:blogs',
-            'category_id' => 'required|exists:categories, id',
+            'category_id' => 'required|exists:categories,id',
             'details' => 'required|min:10'
         ]);
 
