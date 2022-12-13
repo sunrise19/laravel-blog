@@ -23,12 +23,17 @@ class BlogController extends Controller
             'title' => 'required|unique:blogs|max:255|min:5',
             'slug' => 'required|unique:blogs',
             'category_id' => 'required|exists:categories,id',
-            'details' => 'required|min:10'
+            'details' => 'required|min:10',
+            'image' => 'required|mimes:jpg,png,jpeg'
         ]);
 
         // dd($valid['slug']);
         $slug = Str::slug($valid['slug'], '-');
-        Blog::create(array_merge($valid, ['slug'=> $slug]));
+        $img_dir = $request->file('image')->store('blog_images', 'public');
+        // dd($img_dir);
+        Blog::create(array_merge($valid, ['slug'=> $slug,
+                                                               'image' =>$img_dir
+        ]));
         // return redirect()->back()->with('message', 'Post Created');
         return redirect()->back()->withInput($request->input())->with('message', 'Post Created'); //leaves the information on the field if an error is thrown
     }
@@ -49,13 +54,21 @@ class BlogController extends Controller
         $valid = $request->validate([
             'title' => ['required', 'max:255', 'min:5'],
             'slug' => ['required', Rule::unique('blogs')->ignore($blog)],
-            'category_id' => 'required|exists:categories, id',
-            'details' => ['required', 'min:10']
+            'category_id' => 'required|exists:categories,id',
+            'details' => ['required', 'min:10'],
+            'image' => ['nullable', 'mimes:jpg,png,jpeg']
         ]);
 
         // dd($valid['slug']);
         $slug = Str::slug($valid['slug'], '-');
-        $blog->update(array_merge($valid, ['slug'=> $slug]));
+
+        if ($request->hasFile('image')){
+            $blog->update(array_merge($valid, ['image'=> $request->file('image')->store('blog_images', 'public')]));
+        }
+        else{
+            $blog->update(array_merge($valid, ['slug'=> $slug]));
+        }
+
         return redirect()->back()->with('message', 'Post Updated');
     }
 

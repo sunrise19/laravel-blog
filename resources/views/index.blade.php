@@ -14,13 +14,13 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui repudiandae o
               {{ session()->get('message') }}
           </div>
       @endif
-      
+
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach($blogs as $blog)
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    <img class="card-img-top" src="{{ asset('storage/'.$blog->image)}}" alt="..." />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -28,6 +28,12 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui repudiandae o
                             <h5 class="fw-bolder">
                                 {{ $blog->title}}
                             </h5>
+                            <span>
+                                Category:
+                                @if ($blog->category !=null)
+                                {{$blog->category->name}}
+                                @endif
+                            </span>
                             <span>
                                 {{$blog->slug}}
                             </span>
@@ -47,6 +53,9 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui repudiandae o
                 </div>
             </div>
             @endforeach
+        </div>
+        <div class="d-flex justify-content-center">
+            {!! $blogs->links() !!}
         </div>
     </div>
 </section>

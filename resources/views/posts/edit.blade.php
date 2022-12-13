@@ -26,7 +26,7 @@
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center">EDIT BLOG</h1>
             <div class="sm-shadow card p-5 m-3">
-                <form action="{{ route('blog.update', $blog->id)}}" class="form-control" method="post">
+                <form action="{{ route('blog.update', $blog->id)}}" class="form-control" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -70,6 +70,16 @@
                         @enderror
 
                       </div>
+
+                      <div class="mb-3">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" name="image" id="image" @error('image') is-invalid @enderror>
+
+                        @error('image')
+                        <small class="text-danger">{{ $message}}</small>
+                        @enderror
+
+                    </div>
 
                     <div class=" mb-3 w-100">
                         <button type="submit" class="btn btn-outline-primary w-100">Edit Post</button>

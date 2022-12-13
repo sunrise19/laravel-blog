@@ -25,4 +25,8 @@ Route::post("/login", [AuthController::class, 'loginUser']);
 
 Route::group(['middleware'=>'auth:sanctum'], function(){
     Route::post("/create-blog", [BlogController::class, 'store']);
+    Route::put('/update-blog/{id}', [BlogController::class, 'update']);
+    Route::get('/blogs', [BlogController::class, 'index']);
+    Route::get('/blogs/{id}', [BlogController::class, 'show']);
+    Route::delete('/delete/{id}', [BlogController::class, 'destroy']);
 });

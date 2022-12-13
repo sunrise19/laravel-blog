@@ -23,6 +23,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                <a href="{{ route('categories.create')}}" class="btn btn-success">Create Categories</a>
             </div>
         </div>
     </div>

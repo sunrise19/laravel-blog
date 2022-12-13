@@ -26,7 +26,7 @@
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center">BLOG FORM</h1>
             <div class="sm-shadow card p-5 m-3">
-                <form action="{{ route('blog.store') }}" class="form-control" method="post">
+                <form action="{{ route('blog.store') }}" class="form-control" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -64,6 +64,16 @@
                         <textarea class="form-control" id="details" rows="3" name="details" @error('slug') is-invalid @enderror value="{{ old('details')}}"></textarea>
 
                         @error('details')
+                        <small class="text-danger">{{ $message}}</small>
+                        @enderror
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" name="image" id="image" @error('image') is-invalid @enderror>
+
+                        @error('image')
                         <small class="text-danger">{{ $message}}</small>
                         @enderror
 
